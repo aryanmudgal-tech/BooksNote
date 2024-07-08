@@ -1,0 +1,80 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>BookNotes</title>
+    <link rel="stylesheet" href="/styles/styles.css">
+</head>
+<body>
+    <nav class="navbar">
+        <div class="logo">BookNotes</div>
+        <ul>
+            <li><a href="/read">Read</a></li>
+            <li><a href="/add">Add</a></li>
+        </ul>
+    </nav>
+
+    <header>
+        <h1>Key Takeaways from Your Recent Reads</h1>
+    </header>
+
+    
+
+    <main>
+        <div class="book-container">
+            <% content.forEach((entry)=>{%>
+            <div class="book" id="<% entry.id %>">
+                <h2><%= entry.title %></h2>
+                <p>Rating: <%= entry.rating %></p>
+                <div class="summary">
+                    <h3>Summary</h3>
+                    <p><%= entry.summary %></p>
+                </div>
+
+                <button class="read-more">Read More</button>
+
+                <button class="read-less" style="display: none;">Read Less</button>
+                <form action="/delete" method="post">
+                    <button name="deleteId" value="<%= entry.id %>">Delete</button>
+                  </form>
+            </div>
+
+
+            <% }) %>
+        </div>
+    </main>
+
+    <script>
+        document.addEventListener('DOMContentLoaded', () => {
+    document.querySelectorAll('.book').forEach(book => {
+        const summary = book.querySelector('.summary');
+        const readMoreButton = book.querySelector('.read-more');
+        const readLessButton = book.querySelector('.read-less');
+        
+        // Check the height of the summary content
+        if (summary.scrollHeight > 100) {
+            summary.style.maxHeight = '100px';
+            readMoreButton.style.display = 'block';
+            readLessButton.style.display = 'none';
+        } else {
+            readMoreButton.style.display = 'none';
+            readLessButton.style.display = 'none';
+        }
+
+        readMoreButton.addEventListener('click', () => {
+            summary.style.maxHeight = summary.scrollHeight + 'px';
+            readMoreButton.style.display = 'none';
+            readLessButton.style.display = 'block';
+        });
+
+        readLessButton.addEventListener('click', () => {
+            summary.style.maxHeight = '100px';
+            readMoreButton.style.display = 'block';
+            readLessButton.style.display = 'none';
+        });
+    });
+});
+    </script>
+</body>
+</html>
