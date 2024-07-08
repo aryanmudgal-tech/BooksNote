@@ -1,4 +1,4 @@
-# Book Summaries Web Application
+# BooksNote
 
 This project is a web application for managing book summaries. Users can view, add, and delete book summaries stored in a PostgreSQL database.
 
